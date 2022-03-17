@@ -11,16 +11,16 @@ import ficha8.dto.SimpleResponse;
 public class Centro_Comercial {
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
+	
+	@OneToMany(mappedBy = "centro_comercial")
+	private List<Andar> andares;
 	
 	private String nome;
 	private String morada;
 	private int numero_max_andar;
-	
-	@OneToMany(mappedBy = "centro_comercial")
-	private List<Andar> andares;
 	
 	public Long getId() {
 		return id;
@@ -43,6 +43,14 @@ public class Centro_Comercial {
 	}
 	public void setNumero_max_andar(int numero_max_andar) {
 		this.numero_max_andar = numero_max_andar;
+	}
+
+	public List<Andar> getAndares() {
+		return andares;
+	}
+
+	public void setAndares(List<Andar> andares) {
+		this.andares = andares;
 	}
 
 	@Override

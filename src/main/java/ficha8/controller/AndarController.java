@@ -12,6 +12,7 @@ import ficha8.dto.SimpleResponseAndar;
 import ficha8.model.Andar;
 import ficha8.service.AndarService;
 
+@RestController
 public class AndarController {
 
 	private final AndarService andarService;
@@ -24,7 +25,7 @@ public class AndarController {
 	@PostMapping("/addAndar")
 	public ResponseEntity<SimpleResponse> addAndar(@RequestBody Andar andar){
 		SimpleResponseAndar sra = new SimpleResponseAndar();
-		
+
 		if(andar.getNumero_andar() < 0) {
 			sra.setMessage("Número de andar inválido. Número menor do que 0.");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(sra);

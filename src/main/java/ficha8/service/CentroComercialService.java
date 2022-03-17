@@ -3,8 +3,12 @@ package ficha8.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ficha8.model.Andar;
 import ficha8.model.Centro_Comercial;
+import ficha8.model.Loja;
 import ficha8.repository.centroComercialRepository;
+import ficha8.repository.lojaRepository;
+import ficha8.repository.andarRepository;
 
 import static java.lang.Float.NaN;
 import static java.lang.Long.parseLong;
@@ -17,10 +21,15 @@ import java.util.Optional;
 public class CentroComercialService {
 
 	private final centroComercialRepository ccRepo;
+	private final andarRepository andarRepo;
+	private final lojaRepository lojaRepo;
 	
 	@Autowired
-	public CentroComercialService(centroComercialRepository ccRepo) {
+	public CentroComercialService(centroComercialRepository ccRepo, andarRepository andarRepo, lojaRepository lojaRepo) {
+		super();
 		this.ccRepo = ccRepo;
+		this.andarRepo = andarRepo;
+		this.lojaRepo = lojaRepo;
 	}
 	
 	public boolean addCentroComercial(Centro_Comercial cc) {
@@ -30,7 +39,7 @@ public class CentroComercialService {
 		}
 		return false;
 	}
-	
+
 	public boolean deleteCentroComercial(String id) {
 		try {
 			Long idLong = parseLong(id);
@@ -40,6 +49,12 @@ public class CentroComercialService {
 			}
 			
 			Centro_Comercial cc = ccRepo.findById(idLong).get();
+			for(Andar aux: cc.getAndares()) {
+				for(Loja aux2: aux.getLojas()) {
+					lojaRepo.delete(aux2);
+				}
+				andarRepo.delete(aux);
+			}
 			ccRepo.delete(cc);
 			return true;
 		}catch(Exception e) {

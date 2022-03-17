@@ -13,20 +13,20 @@ import ficha8.dto.SimpleResponse;
 public class Andar {
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-	
-	private int numero_andar;
-	private int numero_max_lojas;
 	
 	@ManyToOne()
     @JsonIgnore
-    @JoinColumn(name = "centro_comercial", nullable = false)
+    @JoinColumn(name = "centro_comercial_id", nullable = false)
     private Centro_Comercial centro_comercial;
     
     @OneToMany(mappedBy = "andar")
 	private List<Loja> lojas;
+    
+	private int numero_andar;
+	private int numero_max_lojas;
 	
 	public Long getId() {
 		return id;
@@ -54,6 +54,14 @@ public class Andar {
 
 	public void setCentro_comercial(Centro_Comercial centro_comercial) {
 		this.centro_comercial = centro_comercial;
+	}
+
+	public List<Loja> getLojas() {
+		return lojas;
+	}
+
+	public void setLojas(List<Loja> lojas) {
+		this.lojas = lojas;
 	}
 
 	@Override

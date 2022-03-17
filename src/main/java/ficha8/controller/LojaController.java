@@ -13,6 +13,8 @@ import ficha8.dto.SimpleResponseLoja;
 import ficha8.model.Loja;
 import ficha8.service.LojaService;
 
+
+@RestController
 public class LojaController {
 	
 	private final LojaService lojaService;

@@ -44,7 +44,7 @@ public class CentroComercialController {
 		
 		if(centroComercialService.addCentroComercial(cc)) {
 			srcc.setAsSuccess("Um novo centro comercial inserido.");
-			// srcc.setCentroComercial(centroComercialService.getAllCentroComercial());
+		    srcc.setCentros(centroComercialService.getAllCentroComercial());
 		}else{
 			srcc.setAsError("Foi encontrado um erro ao inserir um centro comercial.");
 		}

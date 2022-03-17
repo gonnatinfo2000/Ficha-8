@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 
 import ficha8.model.Andar;
 import ficha8.model.Centro_Comercial;
+import ficha8.model.Loja;
 import ficha8.repository.andarRepository;
 import ficha8.repository.centroComercialRepository;
+import ficha8.repository.lojaRepository;
 
 import static java.lang.Float.NaN;
 import static java.lang.Long.parseLong;
@@ -20,11 +22,13 @@ public class AndarService {
 	
 	private final andarRepository andarRepo;
 	private final centroComercialRepository ccRepo;
+	private final lojaRepository lojaRepo;
 	
 	@Autowired
-	public AndarService(andarRepository andarRepo, centroComercialRepository ccRepo) {
+	public AndarService(andarRepository andarRepo, centroComercialRepository ccRepo, lojaRepository lojaRepo) {
 		this.andarRepo = andarRepo;
 		this.ccRepo = ccRepo;
+		this.lojaRepo = lojaRepo;
 	}
 	
 	public boolean addAndar(Andar andar) {
@@ -34,7 +38,7 @@ public class AndarService {
 		}
 		return false;
 	}
-	
+
 	public String addAndarToCentroComercial(String andar_id, String centro_comercial_id) {
 		Optional<Andar> opcionalAndar = andarRepo.findById(Long.parseLong(andar_id));
 		Optional<Centro_Comercial> opcionalCC = ccRepo.findById(Long.parseLong(centro_comercial_id));
@@ -63,6 +67,9 @@ public class AndarService {
 			}
 			
 			Andar andar = andarRepo.findById(idLong).get();
+			for(Loja aux: andar.getLojas()) {
+				lojaRepo.delete(aux);
+			}
 			andarRepo.delete(andar);
 			return true;
 		}catch(Exception e) {

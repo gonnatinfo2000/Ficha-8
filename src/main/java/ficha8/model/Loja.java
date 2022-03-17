@@ -13,7 +13,6 @@ public class Loja {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 	
-	
 	@ManyToOne()
     @JsonIgnore
     @JoinColumn(name = "andar_id", nullable = false)
